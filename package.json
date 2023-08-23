@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development --watch"
+    "dev": "webpack --mode development --watch",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "save": "^2.9.0",
-    "three": "^0.155.0"
+    "three": "^0.155.0",
+    "vercel": "^32.0.0"
   }
 }
