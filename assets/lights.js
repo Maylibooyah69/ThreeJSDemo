@@ -25,15 +25,25 @@ gui.add(ambientLight, 'intensity', 0, 2).name('Ambintensity')
 
 const pointLight = new THREE.PointLight(0xffffff, 75)
 gui.add(pointLight, 'intensity', 0, 500).name('PLintensity')
+// gui.add(pointLight, 'shadow')
 pointLight.position.x = 2
 pointLight.position.y = 3
-pointLight.position.z = 4
-// scene.add(pointLight)
+pointLight.position.z = 2
+pointLight.castShadow = true
+pointLight.shadow.mapSize.width = 1024
+pointLight.shadow.mapSize.height = 1024
+const PlightShadowhelper=new THREE.CameraHelper(pointLight.shadow.camera)
+// scene.add(PlightShadowhelper)
+pointLight.shadow.camera.far=10
+// pointLight.
+
+gui.add(pointLight,'castShadow')
+scene.add(pointLight)
 
 const directionalLight = new THREE.DirectionalLight(0xff00ff)
 gui.add(directionalLight, 'intensity', 0, 2).name('Diintensity')
 // scene.add(directionalLight)
-
+directionalLight.castShadow = true
 const hemisphereLight = new THREE.HemisphereLight(0x00ff00, 0xff0000,0.3) 
 gui.add(hemisphereLight, 'intensity', 0, 2).name('Hemiintensity')
 
@@ -43,7 +53,7 @@ const hemiHelper=new THREE.HemisphereLightHelper(hemisphereLight)
 
 const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1)
 gui.add(rectAreaLight, 'intensity', 0, 10,0.001).name('Rectintensity')
-scene.add(rectAreaLight)
+// scene.add(rectAreaLight)
 
 
 const spotLight = new THREE.SpotLight(0x78ff00, 0.5, 10, Math.PI * 0.1, 0.25, 1)
@@ -51,8 +61,13 @@ gui.add(spotLight, 'intensity', 0, 10,0.001).name('Spotintensity')
 spotLight.position.set(0, 2, 3)
 
 spotLight.target.position.x=-1.5
-scene.add(spotLight,spotLight.target)
+// scene.add(spotLight,spotLight.target)
 gui.add(spotLight.target.position, 'x',-3,3,0.01).name('SpotLightAngel')
+
+//shadows
+
+
+
 
 
 /**
@@ -68,17 +83,20 @@ const sphere = new THREE.Mesh(
     material
 )
 sphere.position.x = - 1.5
+sphere.castShadow = true
 
 const cube = new THREE.Mesh(
     new THREE.BoxGeometry(0.75, 0.75, 0.75),
     material
 )
+cube.castShadow = true
 
 const torus = new THREE.Mesh(
     new THREE.TorusGeometry(0.3, 0.2, 32, 64),
     material
 )
 torus.position.x = 1.5
+torus.castShadow = true
 
 const plane = new THREE.Mesh(
     new THREE.PlaneGeometry(5, 5),
@@ -86,6 +104,7 @@ const plane = new THREE.Mesh(
 )
 plane.rotation.x = - Math.PI * 0.5
 plane.position.y = - 0.65
+plane.receiveShadow = true
 
 scene.add(sphere, cube, torus, plane)
 
@@ -110,6 +129,7 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    
 })
 
 /**
@@ -135,7 +155,9 @@ const renderer = new THREE.WebGLRenderer({
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
+gui.add(renderer.shadowMap, 'enabled').name('Shadow')
 /**
  * Animate
  */

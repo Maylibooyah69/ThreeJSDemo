@@ -10,13 +10,153 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./assets/lights.js":
+/***/ "./assets/Hhouse.js":
 /*!**************************!*\
-  !*** ./assets/lights.js ***!
+  !*** ./assets/Hhouse.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n/* harmony import */ var lil_gui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lil-gui */ \"./node_modules/lil-gui/dist/lil-gui.esm.js\");\n\n\n\nthree__WEBPACK_IMPORTED_MODULE_0__.ColorManagement.enabled = false;\n\n/**\n * Base\n */\n// Debug\nvar gui = new lil_gui__WEBPACK_IMPORTED_MODULE_1__.GUI();\n\n// Canvas\nvar canvas = document.querySelector('canvas.webgl');\n\n// Scene\nvar scene = new three__WEBPACK_IMPORTED_MODULE_0__.Scene();\n\n/**\n * Lights\n */\nvar ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__.AmbientLight(0xffffff, 0.5);\n// scene.add(ambientLight)\ngui.add(ambientLight, 'intensity', 0, 2).name('Ambintensity');\nvar pointLight = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight(0xffffff, 75);\ngui.add(pointLight, 'intensity', 0, 500).name('PLintensity');\n// gui.add(pointLight, 'shadow')\npointLight.position.x = 2;\npointLight.position.y = 3;\npointLight.position.z = 2;\npointLight.castShadow = true;\npointLight.shadow.mapSize.width = 1024;\npointLight.shadow.mapSize.height = 1024;\nvar PlightShadowhelper = new three__WEBPACK_IMPORTED_MODULE_0__.CameraHelper(pointLight.shadow.camera);\n// scene.add(PlightShadowhelper)\npointLight.shadow.camera.far = 10;\n// pointLight.\n\ngui.add(pointLight, 'castShadow');\nscene.add(pointLight);\nvar directionalLight = new three__WEBPACK_IMPORTED_MODULE_0__.DirectionalLight(0xff00ff);\ngui.add(directionalLight, 'intensity', 0, 2).name('Diintensity');\n// scene.add(directionalLight)\ndirectionalLight.castShadow = true;\nvar hemisphereLight = new three__WEBPACK_IMPORTED_MODULE_0__.HemisphereLight(0x00ff00, 0xff0000, 0.3);\ngui.add(hemisphereLight, 'intensity', 0, 2).name('Hemiintensity');\nvar hemiHelper = new three__WEBPACK_IMPORTED_MODULE_0__.HemisphereLightHelper(hemisphereLight);\n// scene.add(hemiHelper)\n// scene.add(hemisphereLight)\n\nvar rectAreaLight = new three__WEBPACK_IMPORTED_MODULE_0__.RectAreaLight(0x4e00ff, 2, 1, 1);\ngui.add(rectAreaLight, 'intensity', 0, 10, 0.001).name('Rectintensity');\n// scene.add(rectAreaLight)\n\nvar spotLight = new three__WEBPACK_IMPORTED_MODULE_0__.SpotLight(0x78ff00, 0.5, 10, Math.PI * 0.1, 0.25, 1);\ngui.add(spotLight, 'intensity', 0, 10, 0.001).name('Spotintensity');\nspotLight.position.set(0, 2, 3);\nspotLight.target.position.x = -1.5;\n// scene.add(spotLight,spotLight.target)\ngui.add(spotLight.target.position, 'x', -3, 3, 0.01).name('SpotLightAngel');\n\n//shadows\n\n/**\n * Objects\n */\n// Material\nvar material = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial();\nmaterial.roughness = 0.4;\n\n// Objects\nvar sphere = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.SphereGeometry(0.5, 32, 32), material);\nsphere.position.x = -1.5;\nsphere.castShadow = true;\nvar cube = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.BoxGeometry(0.75, 0.75, 0.75), material);\ncube.castShadow = true;\nvar torus = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.TorusGeometry(0.3, 0.2, 32, 64), material);\ntorus.position.x = 1.5;\ntorus.castShadow = true;\nvar plane = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.PlaneGeometry(5, 5), material);\nplane.rotation.x = -Math.PI * 0.5;\nplane.position.y = -0.65;\nplane.receiveShadow = true;\nscene.add(sphere, cube, torus, plane);\n\n/**\n * Sizes\n */\nvar sizes = {\n  width: window.innerWidth,\n  height: window.innerHeight\n};\nwindow.addEventListener('resize', function () {\n  // Update sizes\n  sizes.width = window.innerWidth;\n  sizes.height = window.innerHeight;\n\n  // Update camera\n  camera.aspect = sizes.width / sizes.height;\n  camera.updateProjectionMatrix();\n\n  // Update renderer\n  renderer.setSize(sizes.width, sizes.height);\n  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));\n});\n\n/**\n * Camera\n */\n// Base camera\nvar camera = new three__WEBPACK_IMPORTED_MODULE_0__.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);\ncamera.position.x = 1;\ncamera.position.y = 1;\ncamera.position.z = 2;\nscene.add(camera);\n\n// Controls\nvar controls = new three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_2__.OrbitControls(camera, canvas);\ncontrols.enableDamping = true;\n\n/**\n * Renderer\n */\nvar renderer = new three__WEBPACK_IMPORTED_MODULE_0__.WebGLRenderer({\n  canvas: canvas\n});\nrenderer.outputColorSpace = three__WEBPACK_IMPORTED_MODULE_0__.LinearSRGBColorSpace;\nrenderer.setSize(sizes.width, sizes.height);\nrenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));\nrenderer.shadowMap.enabled = true;\nrenderer.shadowMap.type = three__WEBPACK_IMPORTED_MODULE_0__.PCFSoftShadowMap;\ngui.add(renderer.shadowMap, 'enabled').name('Shadow');\n/**\n * Animate\n */\nvar clock = new three__WEBPACK_IMPORTED_MODULE_0__.Clock();\nvar tick = function tick() {\n  var elapsedTime = clock.getElapsedTime();\n\n  // Update objects\n  sphere.rotation.y = 0.1 * elapsedTime;\n  cube.rotation.y = 0.1 * elapsedTime;\n  torus.rotation.y = 0.1 * elapsedTime;\n  sphere.rotation.x = 0.15 * elapsedTime;\n  cube.rotation.x = 0.15 * elapsedTime;\n  torus.rotation.x = 0.15 * elapsedTime;\n\n  // Update controls\n  controls.update();\n\n  // Render\n  renderer.render(scene, camera);\n\n  // Call tick again on the next frame\n  window.requestAnimationFrame(tick);\n};\ntick();\n\n//# sourceURL=webpack://threejs/./assets/lights.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n/* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ \"./node_modules/three/examples/jsm/controls/OrbitControls.js\");\n/* harmony import */ var lil_gui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lil-gui */ \"./node_modules/lil-gui/dist/lil-gui.esm.js\");\n/* harmony import */ var _resources_textures_door_color_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./resources/textures/door/color.jpg */ \"./assets/resources/textures/door/color.jpg\");\n/* harmony import */ var _resources_textures_door_alpha_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./resources/textures/door/alpha.jpg */ \"./assets/resources/textures/door/alpha.jpg\");\n/* harmony import */ var _resources_textures_door_Normal_jpg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resources/textures/door/Normal.jpg */ \"./assets/resources/textures/door/Normal.jpg\");\n/* harmony import */ var _resources_textures_door_roughness_jpg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resources/textures/door/roughness.jpg */ \"./assets/resources/textures/door/roughness.jpg\");\n/* harmony import */ var _resources_textures_door_height_jpg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./resources/textures/door/height.jpg */ \"./assets/resources/textures/door/height.jpg\");\n/* harmony import */ var _resources_textures_door_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./resources/textures/door/AmbientOcclusion.jpg */ \"./assets/resources/textures/door/AmbientOcclusion.jpg\");\n/* harmony import */ var _resources_textures_bricks_color_jpg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./resources/textures/bricks/color.jpg */ \"./assets/resources/textures/bricks/color.jpg\");\n/* harmony import */ var _resources_textures_bricks_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./resources/textures/bricks/AmbientOcclusion.jpg */ \"./assets/resources/textures/bricks/AmbientOcclusion.jpg\");\n/* harmony import */ var _resources_textures_bricks_Normal_jpg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resources/textures/bricks/Normal.jpg */ \"./assets/resources/textures/bricks/Normal.jpg\");\n/* harmony import */ var _resources_textures_bricks_Roughness_jpg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./resources/textures/bricks/Roughness.jpg */ \"./assets/resources/textures/bricks/Roughness.jpg\");\n/* harmony import */ var _resources_textures_grass_color_jpg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./resources/textures/grass/color.jpg */ \"./assets/resources/textures/grass/color.jpg\");\n/* harmony import */ var _resources_textures_grass_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./resources/textures/grass/AmbientOcclusion.jpg */ \"./assets/resources/textures/grass/AmbientOcclusion.jpg\");\n/* harmony import */ var _resources_textures_grass_Normal_jpg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./resources/textures/grass/Normal.jpg */ \"./assets/resources/textures/grass/Normal.jpg\");\n/* harmony import */ var _resources_textures_grass_Roughness_jpg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./resources/textures/grass/Roughness.jpg */ \"./assets/resources/textures/grass/Roughness.jpg\");\n\n\n\nthree__WEBPACK_IMPORTED_MODULE_0__.ColorManagement.enabled = false;\n\n/**\n * Base\n */\n// Debug\nvar gui = new lil_gui__WEBPACK_IMPORTED_MODULE_1__.GUI();\n\n// Canvas\nvar canvas = document.querySelector('canvas.webgl');\n\n// Scene\nvar scene = new three__WEBPACK_IMPORTED_MODULE_0__.Scene();\nvar fog = new three__WEBPACK_IMPORTED_MODULE_0__.Fog('#262837', 1, 15);\nscene.fog = fog;\n/**\n * Textures\n */\nvar textureLoader = new three__WEBPACK_IMPORTED_MODULE_0__.TextureLoader();\n\nvar doorColorTexture = textureLoader.load(_resources_textures_door_color_jpg__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\n\nvar doorAlphaTexture = textureLoader.load(_resources_textures_door_alpha_jpg__WEBPACK_IMPORTED_MODULE_3__[\"default\"]);\n\nvar doorNormalTexture = textureLoader.load(_resources_textures_door_Normal_jpg__WEBPACK_IMPORTED_MODULE_4__[\"default\"]);\n\nvar doorroughnessTexture = textureLoader.load(_resources_textures_door_roughness_jpg__WEBPACK_IMPORTED_MODULE_5__[\"default\"]);\n\nvar doorheightTexture = textureLoader.load(_resources_textures_door_height_jpg__WEBPACK_IMPORTED_MODULE_6__[\"default\"]);\n\nvar doorAmbientOcclusionTexture = textureLoader.load(_resources_textures_door_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_7__[\"default\"]);\n\nvar brickColorTexture = textureLoader.load(_resources_textures_bricks_color_jpg__WEBPACK_IMPORTED_MODULE_8__[\"default\"]);\n\nvar brickAmbientOcclusionTexture = textureLoader.load(_resources_textures_bricks_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_9__[\"default\"]);\n\nvar brickNormalTexture = textureLoader.load(_resources_textures_bricks_Normal_jpg__WEBPACK_IMPORTED_MODULE_10__[\"default\"]);\n\nvar brickRoughnessTexture = textureLoader.load(_resources_textures_bricks_Roughness_jpg__WEBPACK_IMPORTED_MODULE_11__[\"default\"]);\n\nvar grasColorTexture = textureLoader.load(_resources_textures_grass_color_jpg__WEBPACK_IMPORTED_MODULE_12__[\"default\"]);\n\nvar grasAmbientOcclusionTexture = textureLoader.load(_resources_textures_grass_AmbientOcclusion_jpg__WEBPACK_IMPORTED_MODULE_13__[\"default\"]);\n\nvar grasNormalTexture = textureLoader.load(_resources_textures_grass_Normal_jpg__WEBPACK_IMPORTED_MODULE_14__[\"default\"]);\n\nvar grasRoughnessTexture = textureLoader.load(_resources_textures_grass_Roughness_jpg__WEBPACK_IMPORTED_MODULE_15__[\"default\"]);\ngrasColorTexture.repeat.set(8, 8);\ngrasColorTexture.wrapS = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasColorTexture.wrapT = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasAmbientOcclusionTexture.repeat.set(8, 8);\ngrasAmbientOcclusionTexture.wrapS = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasAmbientOcclusionTexture.wrapT = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasNormalTexture.repeat.set(8, 8);\ngrasNormalTexture.wrapS = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasNormalTexture.wrapT = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasRoughnessTexture.repeat.set(8, 8);\ngrasRoughnessTexture.wrapS = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\ngrasRoughnessTexture.wrapT = three__WEBPACK_IMPORTED_MODULE_0__.RepeatWrapping;\n\n/**\n * House\n */\n// group\nvar house = new three__WEBPACK_IMPORTED_MODULE_0__.Group();\nscene.add(house);\n\n//walls\nvar walls = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.BoxGeometry(3.5, 3, 3.5), new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n  map: brickColorTexture,\n  aoMap: brickAmbientOcclusionTexture,\n  transparent: true,\n  normalMap: brickNormalTexture,\n  roughnessMap: brickRoughnessTexture\n}));\nwalls.position.y = 1.5;\nhouse.add(walls);\n//roof\nvar roof = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.ConeGeometry(3.5, 1, 4), new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial());\nroof.position.y = 3.5;\nroof.rotation.y = Math.PI * 0.25;\nhouse.add(roof);\n\n//door\nvar door = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.PlaneGeometry(2, 2, 64, 64), new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n  map: doorColorTexture,\n  alphaMap: doorAlphaTexture,\n  transparent: true,\n  normalMap: doorNormalTexture,\n  roughnessMap: doorroughnessTexture,\n  aoMap: doorAmbientOcclusionTexture,\n  displacementMap: doorheightTexture,\n  displacementScale: 0.1\n}));\nhouse.add(door);\ndoor.position.z = 3.5 / 2 + 0.001;\ndoor.position.y = 1;\n\n//bushes\nvar bushGeometry = new three__WEBPACK_IMPORTED_MODULE_0__.SphereGeometry(1, 16, 16);\nvar bushMat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshBasicMaterial({\n  color: \"green\"\n});\nvar bush1 = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(bushGeometry, bushMat);\nbush1.scale.set(0.5, 0.5, 0.5);\nbush1.position.set(0.8, 0.2, 2, 2);\nvar bush2 = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(bushGeometry, bushMat);\nbush2.scale.set(0.25, 0.25, 0.25);\nbush2.position.set(1.4, 0.1, 2.1);\nvar bush3 = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(bushGeometry, bushMat);\nbush3.scale.set(0.4, 0.4, 0.4);\nbush3.position.set(-0.8, 0.1, 2.2);\nvar bush4 = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(bushGeometry, bushMat);\nbush4.scale.set(0.15, 0.15, 0.15);\nbush4.position.set(-1, 0.05, 2.6);\nhouse.add(bush1, bush2, bush3, bush4);\n\n//graves\nvar graves = new three__WEBPACK_IMPORTED_MODULE_0__.Group();\nscene.add(graves);\nvar gravesGeometry = new three__WEBPACK_IMPORTED_MODULE_0__.BoxGeometry(0.6, 0.8, 0.2);\nvar gravesMat = new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n  color: \"black\"\n});\nfor (var i = 0; i < 50; i++) {\n  var angle = Math.random() * Math.PI * 2; // Random angle\n  var radius = 3 + Math.random() * 6; // Random radius\n  var x = Math.cos(angle) * radius; // Get the x position using cosinus\n  var z = Math.sin(angle) * radius; // Get the z position using sinus\n\n  // Create the mesh\n  var grave = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(gravesGeometry, gravesMat);\n\n  // Position\n  grave.position.set(x, 0.3, z);\n\n  // Rotation\n  grave.rotation.z = (Math.random() - 0.5) * 0.4;\n  grave.rotation.y = (Math.random() - 0.5) * 0.4;\n  grave.castShadow = true;\n  // Add to the graves container\n  graves.add(grave);\n}\n\n// Floor\nvar floor = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(new three__WEBPACK_IMPORTED_MODULE_0__.PlaneGeometry(20, 20), new three__WEBPACK_IMPORTED_MODULE_0__.MeshStandardMaterial({\n  map: grasColorTexture,\n  aoMap: grasAmbientOcclusionTexture,\n  transparent: true,\n  normalMap: grasNormalTexture,\n  roughnessMap: grasRoughnessTexture\n}));\nfloor.rotation.x = -Math.PI * 0.5;\nfloor.position.y = 0;\nfloor.side = three__WEBPACK_IMPORTED_MODULE_0__.DoubleSide;\nscene.add(floor);\n\n/**\n * Lights\n */\n// Ambient light\nvar ambientLight = new three__WEBPACK_IMPORTED_MODULE_0__.AmbientLight('#b9d5ff', 0.12);\ngui.add(ambientLight, 'intensity').min(0).max(1).step(0.001);\nscene.add(ambientLight);\n\n// Directional light\nvar moonLight = new three__WEBPACK_IMPORTED_MODULE_0__.DirectionalLight('#ffffff', 2);\nmoonLight.position.set(4, 5, -2);\ngui.add(moonLight, 'intensity').min(0).max(5).step(0.001);\ngui.add(moonLight.position, 'x').min(-5).max(5).step(0.001);\ngui.add(moonLight.position, 'y').min(-5).max(5).step(0.001);\ngui.add(moonLight.position, 'z').min(-5).max(5).step(0.001);\nscene.add(moonLight);\n\n//doorLight\nvar doorLight = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight('#ff7d45', 2, 7);\ndoorLight.position.set(0, 2.2, 2.7);\nhouse.add(doorLight);\n\n//ghost \nvar ghost1 = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight('#ff00ff', 2, 3);\nvar ghost2 = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight('#ffffff', 2, 3);\nvar ghost3 = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight('#00ffff', 2, 3);\nscene.add(ghost1, ghost2, ghost3);\n\n/**\n * Sizes\n */\nvar sizes = {\n  width: window.innerWidth,\n  height: window.innerHeight\n};\nwindow.addEventListener('resize', function () {\n  // Update sizes\n  sizes.width = window.innerWidth;\n  sizes.height = window.innerHeight;\n\n  // Update camera\n  camera.aspect = sizes.width / sizes.height;\n  camera.updateProjectionMatrix();\n\n  // Update renderer\n  renderer.setSize(sizes.width, sizes.height);\n  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));\n});\n\n/**\n * Camera\n */\n// Base camera\nvar camera = new three__WEBPACK_IMPORTED_MODULE_0__.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);\ncamera.position.x = 4;\ncamera.position.y = 2;\ncamera.position.z = 5;\nscene.add(camera);\n\n// Controls\nvar controls = new three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_16__.OrbitControls(camera, canvas);\ncontrols.enableDamping = true;\n\n/**\n * Renderer\n */\nvar renderer = new three__WEBPACK_IMPORTED_MODULE_0__.WebGLRenderer({\n  canvas: canvas\n});\nrenderer.outputColorSpace = three__WEBPACK_IMPORTED_MODULE_0__.LinearSRGBColorSpace;\nrenderer.setSize(sizes.width, sizes.height);\nrenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));\nrenderer.setClearColor('#262837');\n/**\n * Animate\n */\n\n//shadows\nmoonLight.castShadow = true;\ndoorLight.castShadow = true;\nghost1.castShadow = true;\nghost2.castShadow = true;\nghost3.castShadow = true;\nhouse.receiveShadow = true;\nfloor.castShadow = true;\nfloor.receiveShadow = true;\nrenderer.shadowMap.enabled = true;\nvar clock = new three__WEBPACK_IMPORTED_MODULE_0__.Clock();\nvar tick = function tick() {\n  var elapsedTime = clock.getElapsedTime();\n  //ghost \n  var ghost1Angle = elapsedTime * 0.5;\n  ghost1.position.x = Math.cos(ghost1Angle) * 4;\n  ghost1.position.z = Math.sin(ghost1Angle) * 4;\n  ghost1.position.y = Math.sin(elapsedTime * 3);\n  var ghost2Angle = -elapsedTime * 0.32;\n  ghost2.position.x = Math.cos(ghost2Angle) * 5;\n  ghost2.position.z = Math.sin(ghost2Angle) * 5;\n  ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);\n  var ghost3Angle = -elapsedTime * 0.18;\n  ghost3.position.x = Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32));\n  ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5));\n  ghost3.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);\n  // Update controls\n  controls.update();\n\n  // Render\n  renderer.render(scene, camera);\n\n  // Call tick again on the next frame\n  window.requestAnimationFrame(tick);\n};\ntick();\n\n//# sourceURL=webpack://threejs/./assets/Hhouse.js?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/bricks/AmbientOcclusion.jpg":
+/*!***************************************************************!*\
+  !*** ./assets/resources/textures/bricks/AmbientOcclusion.jpg ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/bricks/AmbientOcclusion.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/bricks/AmbientOcclusion.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/bricks/Normal.jpg":
+/*!*****************************************************!*\
+  !*** ./assets/resources/textures/bricks/Normal.jpg ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/bricks/Normal.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/bricks/Normal.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/bricks/Roughness.jpg":
+/*!********************************************************!*\
+  !*** ./assets/resources/textures/bricks/Roughness.jpg ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/bricks/Roughness.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/bricks/Roughness.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/bricks/color.jpg":
+/*!****************************************************!*\
+  !*** ./assets/resources/textures/bricks/color.jpg ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/bricks/color.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/bricks/color.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/AmbientOcclusion.jpg":
+/*!*************************************************************!*\
+  !*** ./assets/resources/textures/door/AmbientOcclusion.jpg ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/AmbientOcclusion.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/AmbientOcclusion.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/Normal.jpg":
+/*!***************************************************!*\
+  !*** ./assets/resources/textures/door/Normal.jpg ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/Normal.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/Normal.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/alpha.jpg":
+/*!**************************************************!*\
+  !*** ./assets/resources/textures/door/alpha.jpg ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/alpha.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/alpha.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/color.jpg":
+/*!**************************************************!*\
+  !*** ./assets/resources/textures/door/color.jpg ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/color.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/color.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/height.jpg":
+/*!***************************************************!*\
+  !*** ./assets/resources/textures/door/height.jpg ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/height.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/height.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/door/roughness.jpg":
+/*!******************************************************!*\
+  !*** ./assets/resources/textures/door/roughness.jpg ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/door/roughness.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/door/roughness.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/grass/AmbientOcclusion.jpg":
+/*!**************************************************************!*\
+  !*** ./assets/resources/textures/grass/AmbientOcclusion.jpg ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/grass/AmbientOcclusion.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/grass/AmbientOcclusion.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/grass/Normal.jpg":
+/*!****************************************************!*\
+  !*** ./assets/resources/textures/grass/Normal.jpg ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/grass/Normal.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/grass/Normal.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/grass/Roughness.jpg":
+/*!*******************************************************!*\
+  !*** ./assets/resources/textures/grass/Roughness.jpg ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/grass/Roughness.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/grass/Roughness.jpg?");
+
+/***/ }),
+
+/***/ "./assets/resources/textures/grass/color.jpg":
+/*!***************************************************!*\
+  !*** ./assets/resources/textures/grass/color.jpg ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"assets/resources/textures/grass/color.jpg\");\n\n//# sourceURL=webpack://threejs/./assets/resources/textures/grass/color.jpg?");
 
 /***/ }),
 
@@ -89,6 +229,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -105,12 +257,35 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./assets/lights.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./assets/Hhouse.js");
 /******/ 	
 /******/ })()
 ;
