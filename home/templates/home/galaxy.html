@@ -1,0 +1,15 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Simple camera animations</title>
+    <style>
+      * { margin: 0; padding: 0; outline: none}
+      body {overflow-x: hidden; overflow-y: hidden}
+  </style>
+  </head>
+  <body>
+    <canvas class="webgl"></canvas>
+    <script src="{% static 'galaxy.js' %}"></script>
+  </body>
+</html>

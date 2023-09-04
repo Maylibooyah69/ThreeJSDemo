@@ -31,7 +31,7 @@ module.exports = {
         options: { presets: ["@babel/preset-env", "@babel/preset-react"] }
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|mp3)$/i,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
